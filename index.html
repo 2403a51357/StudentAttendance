@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SR University — Student Attendance Management</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f1f5f9;
+      color: #0f172a;
+      padding: 32px 16px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.08);
+      overflow: hidden;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: #ffffff;
+      padding: 28px 32px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 1.9rem;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    header p {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 32px;
+      background-color: #f8fafc;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 0.92rem;
+      color: #475569;
+    }
+
+    .stats {
+      display: flex;
+      gap: 16px;
+      font-weight: 600;
+    }
+
+    .stat-present {
+      color: #16a34a;
+    }
+
+    .stat-absent {
+      color: #dc2626;
+    }
+
+    .table-wrapper {
+      padding: 24px 32px 32px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    th {
+      background-color: #f8fafc;
+      color: #334155;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+    }
+
+    tr:hover {
+      background-color: #f8fafc;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .badge.present {
+      background-color: #dcfce7;
+      color: #15803d;
+    }
+
+    .badge.absent {
+      background-color: #fee2e2;
+      color: #b91c1c;
+    }
+
+    .toggle-btn {
+      padding: 6px 12px;
+      font-size: 0.82rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      background-color: #ffffff;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .toggle-btn:hover {
+      background-color: #2563eb;
+      color: #ffffff;
+      border-color: #2563eb;
+    }
+
+    footer {
+      text-align: center;
+      padding: 16px;
+      font-size: 0.85rem;
+      color: #64748b;
+      background-color: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>SR University</h1>
+      <p>Online Student Attendance Management System</p>
+    </header>
+
+    <div class="meta-bar">
+      <div><strong>Course:</strong> B.Tech Computer Science &amp; Engineering | <strong>Date:</strong> <span id="current-date"></span></div>
+      <div class="stats">
+        <span>Total: <span id="total-count">6</span></span>
+        <span class="stat-present">Present: <span id="present-count">4</span></span>
+        <span class="stat-absent">Absent: <span id="absent-count">2</span></span>
+      </div>
+    </div>
+
+    <div class="table-wrapper">
+      <table id="attendance-table">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Roll Number</th>
+            <th>Student Name</th>
+            <th>Attendance Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>2303A51001</td>
+            <td>Aarav Sharma</td>
+            <td><span class="badge present">Present</span></td>
+            <td><button class="toggle-btn" onclick="toggleStatus(this)">Mark Absent</button></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>2303A51002</td>
+            <td>Diya Reddy</td>
+            <td><span class="badge absent">Absent</span></td>
+            <td><button class="toggle-btn" onclick="toggleStatus(this)">Mark Present</button></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>2303A51003</td>
+            <td>Rohan Verma</td>
+            <td><span class="badge present">Present</span></td>
+            <td><button class="toggle-btn" onclick="toggleStatus(this)">Mark Absent</button></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>2303A51004</td>
+            <td>Ananya Rao</td>
+            <td><span class="badge present">Present</span></td>
+            <td><button class="toggle-btn" onclick="toggleStatus(this)">Mark Absent</button></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>2303A51005</td>
+            <td>Karthik Nair</td>
+            <td><span class="badge absent">Absent</span></td>
+            <td><button class="toggle-btn" onclick="toggleStatus(this)">Mark Present</button></td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>2303A51006</td>
+            <td>Sneha Kulkarni</td>
+            <td><span class="badge present">Present</span></td>
+            <td><button class="toggle-btn" onclick="toggleStatus(this)">Mark Absent</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <footer>
+      SR University &bull; Department of Computer Science &amp; Engineering
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("current-date").textContent = new Date().toLocaleDateString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric"
+    });
+
+    function toggleStatus(button) {
+      const row = button.closest("tr");
+      const badge = row.querySelector(".badge");
+
+      if (badge.classList.contains("present")) {
+        badge.classList.remove("present");
+        badge.classList.add("absent");
+        badge.textContent = "Absent";
+        button.textContent = "Mark Present";
+      } else {
+        badge.classList.remove("absent");
+        badge.classList.add("present");
+        badge.textContent = "Present";
+        button.textContent = "Mark Absent";
+      }
+      updateCounts();
+    }
+
+    function updateCounts() {
+      const present = document.querySelectorAll(".badge.present").length;
+      const absent = document.querySelectorAll(".badge.absent").length;
+      document.getElementById("present-count").textContent = present;
+      document.getElementById("absent-count").textContent = absent;
+    }
+  </script>
+</body>
+</html>
